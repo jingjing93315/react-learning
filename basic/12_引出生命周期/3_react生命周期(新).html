@@ -7,9 +7,9 @@
 </head>
 <body>
   <div id="test"></div>
-  <script src="../js/react.development.js"></script>
-  <script src="../js/react-dom.development.js"></script>
-  <script src="../js/babel.min.js"></script>
+  <script src="../js/17.0.1/react.development.js"></script>
+  <script src="../js/17.0.1/react-dom.development.js"></script>
+  <script src="../js/17.0.1/babel.min.js"></script>
   <script type="text/babel">
     class Count extends React.Component {
       constructor(props){
@@ -26,15 +26,18 @@
 
       death = () => {
         ReactDOM.unmountComponentAtNode(document.getElementById('test'))
-      } 
+      }
 
       // 强制更新按钮的回调
       force =  () => {
         this.forceUpdate()
       }
-      componentWillMount() {
-        console.log('Count---componentWillMount')
+      // 若state的值在任何时候都取决于props,那么可以使用getDerivedStateFromProps
+      static getDerivedStateFromProps(props,state){
+        console.log('%c [ getDerivedStateFromProps ]', 'font-size:13px; background:pink; color:#bf2c9f;', props, state)
+        return null
       }
+
 
       componentDidMount() {
         console.log('Count---componentDidMount')
@@ -45,16 +48,18 @@
       }
       // 控制组件更新“阀门” 默认返回true
       shouldComponentUpdate() {
-        return true
         console.log('Count---shouldComponentUpdate')
+        return true
       }
-      // 组件将要更新
-      componentWillUpdate(){
-        console.log('Count---componentWillUpdate')
+      // 更新之前获取快照
+      getSnapshotBeforeUpdate(){
+        console.log('%c [ getSnapshotBeforeUpdate ]-56', 'font-size:13px; background:green; color:#fff;')
+        return '一线蓝光'
       }
-      // 更新完毕
-      componentDidUpdate() {
-        console.log('Count---componentDidUpdate')
+
+      componentDidUpdate(prevProps, prevState, snapShotValue){
+        console.log('Count---componentDidUpdate',prevProps,prevState)
+        console.log(snapShotValue)
       }
 
       render (){
@@ -70,42 +75,7 @@
         )
       }
     }
-    
-    class A extends React.Component {
-      state = {
-        carName: '奔驰'
-      }
-      changeCar = () => {
-        this.setState({
-          carName: '宝马'
-        })
-      }
-      render (){
-        return(
-          <div>
-            <div>我是A组件</div>
-            <button onClick={ this.changeCar }>换车</button>
-            <B carName={this.state.carName} />
-          </div>
-        )
-      }
-    }
-    class B extends React.Component {
-      render (){
-        return(
-          <div>我是B组件，接收到的车是:{this.props.carName}</div>
-        )
-      }
-      componentDidMount(){
-        console.log('B-componentDidMount')
-      }
-      componentWillReceiveProps(props) {
-        console.log('B-props', props)
-        // 小坑 第一次传的不算
-        console.log('B-componentWillReceiveProps')
-      }
-    }
-    ReactDOM.render(<A />, document.getElementById('test'))
+    ReactDOM.render(<Count count={199} />, document.getElementById('test'))
   </script>
 </body>
 </html>
