@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>2_受控组件</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    class Login extends React.Component {
+      // 受控组件-输入类的dom，输入时数据会维护到状态中
+      // 初始化状态
+      state = {
+        username: '', // 用户名
+        password: '' // 密码
+      }
+      // 保存用户名到状态中
+      saveUserName = (event) => {
+        this.setState({
+          username: event.target.value
+        })
+      }
+       // 保存密码到状态中
+      savePassword = (event) => {
+        this.setState({
+          password: event.target.value
+        })
+      }
+      // 表单提交回调
+      handleSubmit = (event) => {
+        event.preventDefault()// 阻止表单提交
+        const { username, password } = this.state
+        alert(`输入的用户名为${username}, 密码为${password}`)
+      }
+      render (){
+        return (
+          <form onSubmit={this.handleSubmit}>
+            用户名:<input onChange={ this.saveUserName } type="text" name="username" />  
+            密码:<input onChange={ this.savePassword } type="password" name="password" />  
+            <button>登录</button>
+          </form>
+        )
+      }
+    }
+    ReactDOM.render(<Login/>, document.getElementById('test'))
+  </script>
+</body>
+</html>

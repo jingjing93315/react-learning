@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>不用函数柯里化实现</title></title>
+</head>
+<body>
+  <div id="test"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    class Login extends React.Component {
+      state = {
+        username: '', // 用户名
+        password: '' // 密码
+      }
+      // 保存表单数据到状态中
+      // 高阶函数
+      saveFormData = (dataType, event) => {
+        this.setState({
+          [dataType] : event.target.value
+        })
+      }
+      // 表单提交回调
+      handleSubmit = (event) => {
+        event.preventDefault()// 阻止表单提交
+        const { username, password } = this.state
+        alert(`输入的用户名为${username}, 密码为${password}`)
+      }
+      render (){
+        return (
+          <form onSubmit={this.handleSubmit}>
+            用户名:<input onChange={ event => this.saveFormData('username', event) } type="text" name="username" />  
+            密码:<input onChange={ event => this.saveFormData('password', event)  } type="password" name="password" />  
+            <button>登录</button>
+          </form>
+        )
+      }
+    }
+    ReactDOM.render(<Login/>, document.getElementById('test'))
+  </script>
+</body>
+</html>
