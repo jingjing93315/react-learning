@@ -8,3 +8,37 @@
     2. 【子组件】给【父组件】传递数据:通过props传递，要求父提前给子传递一个函数
   4. 注意defaultChecked和checked的区别，类似的还有：defaultValue和value
   5. 状态在哪里，操作状态的方法就在哪里
+
+
+## 二、github搜索案例相关知识点
+
+  1. 设计状态时要考虑全面，例如带网络请求的组件，需要考虑请求失败怎么办
+  2. ES6小知识点：解构赋值+重命名
+    ```
+    let obj = { a: { b: 1 } }
+    const { a } =  obj // 传统解构赋值
+    const {a:{b}} = obj //连续解构赋值
+    const {a: {b:value}} = obj // 连续解构赋值+重命名
+    ```
+  3. 消息订阅与发布机制
+    - 先订阅，再发布(理解：有一种隔空对话的感觉)
+    - 适用于任意组件间通信
+    - 要在组件的componentWillUnmount中取消订阅
+  4. fetch 发送请求(关注分离设计思想)
+    ```
+    try {
+      const response = await fetch(`/api/search/users2?q=${keyWord}`)
+      const data = await response.json()
+      PubSub.publish('updateState', {
+        isLoading: false,
+        users: data.items
+      })
+    } catch (error) {
+      PubSub.publish('updateState', {
+        isLoading: false,
+        err: error.message
+      })
+      console.log('请求出错', error)
+    }
+    ```
+    
