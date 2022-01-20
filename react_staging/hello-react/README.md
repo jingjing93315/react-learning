@@ -42,3 +42,17 @@
     }
     ```
     
+
+## 三、路由的基本使用
+  1. 明确好界面中的导航区、展示区
+  2. 导航区a标签改为Link标签
+    ```
+    <Link to="/xxxx">Demo</Link>
+    ```
+  3. 展示区Route标签进行路径的匹配
+    ```
+      <Routes>
+        <Route path="/xxxx" element={<XXX/>} / >
+      </Routes>
+    ```
+  4. <App>最外侧包裹了一个<BrowserRouter>或<HashRouter>
