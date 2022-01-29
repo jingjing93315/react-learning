@@ -56,3 +56,36 @@
       </Routes>
     ```
   4. <App>最外侧包裹了一个<BrowserRouter>或<HashRouter>
+
+
+## 四、 路由组件与一般组件
+  1. 写法不同：
+    - 一般组件:<Demo/>
+    - 路由组件: <Route path="/xxxx" element={<XXX/>} / > 
+  2. 存放位置不同
+    - 一般组件: components
+    - 路由组件: pages
+  3. 接收到的props不同
+    - 一般组件：写组件标签时传递了什么，就能收到什么
+    - 路由组件：接收到三个固定的参数(history，location，match)
+        history:
+          go:f go(n)
+          goBack:f goBack()
+          goForward: f goForward()
+          push: f push(path,state)
+          replace: f replace(path, state)
+        location:
+          pathname: "/about"
+          search: ""
+          state: undefined
+        match:
+          params: {}
+          path: "/about"
+          url: "/about"
+
+
+
+## 五、 NavLink与封装NavLink
+  1. NavLink可以实现路由链接的高亮，通过activeClassName指定样式名
+  2. 标签体内容是一个特殊的标签属性
+  3. 通过this.props.children可获取标签体内容
