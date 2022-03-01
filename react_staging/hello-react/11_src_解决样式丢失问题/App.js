@@ -3,7 +3,7 @@ import React, { Component } from 'react'
  * In react-router-dom v6,"Switch" is replaced by routes "Routes",you need to update 
  * the import name
  */
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home' // Home是路由组件
 import About from './pages/About'
 import Header from './components/Header' // Header是一般组件
@@ -27,12 +27,11 @@ export default class App extends Component {
             </div>
           </div>
           <div className="col-xs-6">
-            <div className="panel"> 
+            <div className="panel">
               <div className="panel-body">
                 <Routes>
                   <Route path="/about" element={<About />} />
                   <Route path="/home" element={<Home />} />
-                  <Route path="/" element={<Navigate to="/about" />} />
                 </Routes>
               </div>
             </div>

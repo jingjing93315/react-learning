@@ -1,4 +1,4 @@
-## 一、 todoList案例相关知识点
+## 一、todoList案例相关知识点
   1. 拆分组件、实现静态组件，注意：className,style的写法
   2. 动态初始化列表，如何确定将数据放在哪个组件的state中
     - 某个组件使用：放在其自身的state中
@@ -58,7 +58,7 @@
   4. <App>最外侧包裹了一个<BrowserRouter>或<HashRouter>
 
 
-## 四、 路由组件与一般组件
+## 四、路由组件与一般组件
   1. 写法不同：
     - 一般组件:<Demo/>
     - 路由组件: <Route path="/xxxx" element={<XXX/>} / > 
@@ -89,3 +89,18 @@
   1. NavLink可以实现路由链接的高亮，通过activeClassName指定样式名
   2. 标签体内容是一个特殊的标签属性
   3. 通过this.props.children可获取标签体内容
+
+
+## 六、 Routes的使用
+  1. 通常情况下，path和element是一一对应的关系
+  2. Routes可以提高路由匹配效率(单一匹配)
+
+## 七、 解决多级路径刷新页面样式丢失的问题
+  1. public/index.html中，引入样式时路径把./改为/(常用)
+  2. public/index.html中引入样式时不写./，写%PUBLIC_URL%(常用)
+  3. 使用HashRouter
+
+## 八、 路由的严格匹配与模糊匹配(react-router-dom v5版本)
+  1. 默认使用的是模糊匹配(输入的路径必须要包含匹配的路径，且顺序要一致)
+  2. 开始严格匹配：<Route exact path="/about" component={About} />
+  3. 严格匹配不要随便开启，需要时再开，有些时候开启会导致无法继续匹配二级路由
