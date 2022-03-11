@@ -1,9 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
-export default class MyNavLink extends Component {
-  render() {
-    return (
-      <NavLink className="list-group-item" {...this.props} />
-    )
+export default function MyNavLink(props) {
+  function computedClassName({isActive}){
+    return isActive ? 'list-group-item specialClass' : 'list-group-item'
   }
+  return (
+    <NavLink
+      className={computedClassName}
+      {...props}
+    />
+  )
 }
