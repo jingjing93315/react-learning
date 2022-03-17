@@ -1,7 +1,5 @@
 import React from 'react'
-
 export default function Detail() {
-  
   return (
     <ul>
       <li>编号：xxx</li>
