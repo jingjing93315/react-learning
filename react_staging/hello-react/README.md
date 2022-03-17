@@ -104,3 +104,13 @@
   1. 默认使用的是模糊匹配(输入的路径必须要包含匹配的路径，且顺序要一致)
   2. 开始严格匹配：<Route exact path="/about" component={About} />
   3. 严格匹配不要随便开启，需要时再开，有些时候开启会导致无法继续匹配二级路由
+
+
+
+  ## 九、 BrowserRouter与HashRouter的区别
+
+  1. 底层原理不同：BrowserRouter使用的是H5的history API,不兼容IE9及以下版本
+，HashRouter使用的是URL的哈希值
+  2. path表现形式不一样：BrowserRouter路径中没有#，HashRouter的路径包含#。
+  3. 刷新前后对路由state参数的影响：BrowserRouter没有任何影响，因为state保存在history对象中，HashRouter刷新后会导致路由state参数的丢失
+  4. 备注：HashRouter可以用于解决一些路径错误相关的问题

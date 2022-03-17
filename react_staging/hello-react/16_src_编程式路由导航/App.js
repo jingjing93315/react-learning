@@ -3,14 +3,13 @@ import React from 'react'
  * In react-router-dom v6,"Switch" is replaced by routes "Routes",you need to update
  * the import name
  */
-import { useRoutes, useInRouterContext } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 import Header from './components/Header' // Header是一般组件
 import MyNavLink from './components/MyNavLink'
 import routes from './routes';
 export default function App() {
   // 根据路由表生成对应的路由规则
   const element = useRoutes(routes)
-  console.log('@@',useInRouterContext())
   return (
     <div>
       <div className="row">
