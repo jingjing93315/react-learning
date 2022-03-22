@@ -1,37 +1,24 @@
-import React from 'react'
-/**
- * In react-router-dom v6,"Switch" is replaced by routes "Routes",you need to update
- * the import name
- */
-import { useRoutes, useInRouterContext } from 'react-router-dom'
-import Header from './components/Header' // Header是一般组件
-import MyNavLink from './components/MyNavLink'
-import routes from './routes';
-export default function App() {
-  // 根据路由表生成对应的路由规则
-  const element = useRoutes(routes)
-  console.log('@@',useInRouterContext())
-  return (
-    <div>
-      <div className="row">
-       <Header />
+import React, { Component } from 'react';
+import {Button, DatePicker} from 'antd'
+import {WechatOutlined, WeiboOutlined, SearchOutlined} from '@ant-design/icons'
+// import './App.less'
+const {RangePicker}  = DatePicker
+class App extends Component {
+  render() {
+    return (
+      <div>
+        App...
+        <Button type="primary">按钮1</Button>
+        <Button>按钮2</Button>
+        <Button type="link">按钮3-link</Button>
+        <Button type="primary" icon={<SearchOutlined />}>Search</Button>
+        <WechatOutlined />
+        <WeiboOutlined />
+        <DatePicker />
+        <RangePicker />
       </div>
-      <div className="row">
-        <div className="col-xs-2 col-xs-offset-2">
-          <div className="list-group">
-            <MyNavLink to="/about">About</MyNavLink>
-            <MyNavLink to="/home">Home</MyNavLink>
-          </div>
-        </div>
-        <div className="col-xs-6">
-          <div className="panel">
-            <div className="panel-body">
-              {/* 注册路由 */}
-              {element}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+    );
+  }
 }
+
+export default App;
