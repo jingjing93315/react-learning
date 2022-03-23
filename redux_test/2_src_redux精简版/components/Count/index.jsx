@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 // 引入store，用于获取redux中的状态
 import store from '../../redux/store'
-// 引入actionCreator,专门用于创建action对象
-import {createDecrementAction, createIncrementAction} from '../../redux/count_action'
-
 export default class Count extends Component {
   // componentDidMount(){
   //   // 监测redux中状态的变化，只要变化，就调用render
@@ -15,27 +12,38 @@ export default class Count extends Component {
   increment = () => {
     const { value } = this.selectNumber
     //通知redux加value
-    store.dispatch(createIncrementAction(value*1))
+    store.dispatch({
+      type: 'increment',
+      data: value*1
+    })
   }
   // 减法
   decrement = () => {
     const { value } = this.selectNumber
-    store.dispatch(createDecrementAction(value*1))
-
+    store.dispatch({
+      type: 'decrement',
+      data: value*1
+    })
   }
   // 奇数加
   incrementIfOdd = () => {
     const { value } = this.selectNumber
     const count = store.getState()
     if (count % 2 !== 0) {
-      store.dispatch(createIncrementAction(value*1))
+      store.dispatch({
+        type: 'increment',
+        data: value*1
+      })
     }
   }
   // 异步加
   incrementAsync = () => {
     const { value } = this.selectNumber
     setTimeout(() => {
-      store.dispatch(createIncrementAction(value*1))
+      store.dispatch({
+        type: 'increment',
+        data: value*1
+      })
     }, 500)
   }
   render() {
