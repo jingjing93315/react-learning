@@ -14,3 +14,16 @@
     2. reducer有两个作用：初始化状态，加工状态
     3. reducer第一次被调用时，是store自动触发的，传递的preState是undefined,传递的action是:{type:'@@REDUX/INIT_a.2.b.4'}
   (5).在index.js中监测store中状态的改变，一旦发生改变重新渲染<App />,备注：redux只负责管理状态，至于状态的改变驱动页面的展示，需要自己手写
+
+
+## 2. 求和案例_redux完整版
+
+  新增文件：
+    1). count_action.js 专门用于创建action对象
+    2). constant.js 放置容易写错的type值
+
+## 3. 求和案例_redux异步action版本
+    (1).说明：延迟的动作不想交给组件自身，交给action
+    (2).何时需要异步action，想要对状态进行操作，但是具体的数据依靠异步任务返回(非必须)
+    (3).异步任务有结果后，分发一个同步的action去真正操作数据
+    (4).备注：异步action不是必须要写的，完全可以自己等待异步任务的结果了再去分发同步action
