@@ -2,3 +2,5 @@
 react_staging/hello-react/node_modules/
 react_staging/hello-react/dist/
 react_staging/hello-react/package-lock.json
+redux_test/node_modules/
+
