@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
-export default class Count extends Component {
+import {connect} from 'react-redux'
+import {
+  createIncrementAction, 
+  createDecrementAction, 
+  createIncrementAsyncAction
+} from '../../redux/count_action'
+
+// 定义UI组件
+class Count extends Component {
   // 加法
   increment = () => {
     const { value } = this.selectNumber
@@ -43,3 +51,21 @@ export default class Count extends Component {
     )
   }
 }
+
+// 创建并暴露一个Count的容器组件
+
+export default connect(
+  state => ({count: state}),
+  // mapDispatchToProps的一般写法
+  // dispatch => ({
+  //   increment: number => dispatch(createIncrementAction(number)),
+  //   decrement: number => dispatch(createDecrementAction(number)),
+  //   incrementAsync:  (number,delay) => dispatch(createIncrementAsyncAction(number, delay))
+  // })
+   // mapDispatchToProps的简写  api层面的优化-自动分发
+   {
+     increment: createIncrementAction,
+     decrement: createDecrementAction,
+     incrementAsync: createIncrementAsyncAction
+   }
+)(Count)
