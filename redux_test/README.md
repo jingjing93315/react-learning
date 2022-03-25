@@ -27,7 +27,7 @@
     (2).何时需要异步action，想要对状态进行操作，但是具体的数据依靠异步任务返回(非必须)
     (3).异步任务有结果后，分发一个同步的action去真正操作数据
     (4).备注：异步action不是必须要写的，完全可以自己等待异步任务的结果了再去分发同步action
-  
+    
 ## 4. 求和案例_react-redux基本使用
   (1).明确概念：
     1).UI组件：不能使用任何redux的api，只负责页面的呈现，交互等。
@@ -50,7 +50,7 @@
     1).定义好UI组件-不暴露
     2).引入connect生成一个容器组件，并暴露，写法：
       connect(
-        state => ({key:value}),//映射状态
+        state => ({key: value}),//映射状态
         {key:xxxxAction} // 映射操作状态的方法
       )(UI组件)
     3).在UI组件中通过this.props.xxxx读取和操作状态
@@ -60,3 +60,11 @@
   (2).为Person组件编写：reducer、action、配置constant常量
   (3).重点：Person的reducer和Count的Reducer要使用combineReducers进行合并，合并后的总状态是一个对象!!!
   (4).交给store的是总reducer，最后注意在组件中取出状态的时候，记得"取到位"
+
+## 7. 求和案例_react-redux开发者工具的使用
+  (1). npm i redux-devtools-extension
+  (2). store中进行配置
+    ```
+    import {composeWithDevTools} from 'redux-devtools-extension'
+    const store = createStore(allReducer,composeWithDevTools(applyMiddleware(thunk)))
+    ```
