@@ -80,3 +80,146 @@ const Login = lazy(() => import('@/pages/Login'))
   (1). Ref Hook可以在函数组件中存储/查找组件内的标签或任意其他数据
   (2). 语法：const refContainer = useRef()
   (3). 作用：保存标签对象，功能与React.createRef()一样
+
+### 4. Fragment
+
+ - 使用
+ ```
+ <Fragment></Fragment>
+ <></>
+ ```
+ - 作用
+ 可以不用必须有一个真实的DOM根标签了
+
+### 5. Context
+
+- 理解
+一种组件间的通信方式，常用于【祖组件】与【后代组件】间通信
+
+- 使用
+
+(1). 创建context容器对象:
+```
+const xxContext = React.createContext()
+
+```
+
+(2). 渲染子组件时，外面包裹xxxContext.Provider,通过value属性给后代组件传递数据
+```
+<xxxContext.Provider value={数据}>
+  子组件
+</xxxContext.Provider>
+```
+
+(3). 后代组件读取数据
+  //第一种方式：类组件
+  ```
+  static contextType = xxxContext //声明接收context
+  this.context // 读取context中的value数据
+  ```
+  // 第二种方式： 函数组件与类组件都适用
+  <xxxContext.Consumer>
+    {
+      value => { // value是context中的value数据
+        要显示的内容
+      }
+    }
+  </xxxContext.Consumer>
+
+- 注意：在应用开发中一般不用context,一般都用它封装react插件
+
+
+### 6.组件优化
+
+- Component的2个问题：
+
+1. 只要执行setState(),即使不改变状态数据，组件也会重新render()
+2. 只当前组件重新render(),就会自动重新render子组件,纵使子组件没有用到父组件的任何数据 ===>效率低
+
+- 效率高的做法
+
+只有当组件的state或props数据发生改变时才重新render()
+
+- 原因
+
+Component中的shouldComponentUpdate()总是返回true
+
+- 解决
+
+  1. 办法一: 
+    + 重写shouldComponentUpdate()方法
+    + 比较新旧state或props数据，如果有变化才返回true，如果没有返回false
+  2. 方法二：
+    + 使用PureComponent
+    + PureComponent重写了shouldComponentUpdate(),只有state或props数据变化才返回true
+    > pay attention：
+      - 只是进行state和props数据的浅比较，如果只是数据对象内部数据变了，返回false，不要直接修改state数据，而是要产生新数据
+
+项目中一般不使用PureComponent来优化
+
+
+### 7. render Props
+
+ - 如何向组件内部动态传入带内容的结构(标签)
+ ```
+ Vue中：使用slot技术，也就是通过组件标签传入结构 <A><B/></A>
+
+ React中：
+  使用children props：通过组件标签体传入结构
+  使用render props：通过组件标签属性传入结构,可以携带数据,一般用render函数属性
+
+ ```
+ - children props
+```
+<A>
+  <B>xxxx</B>
+</A>
+{this.props.children}  问题：如果B组件需要用到A组件内的数据，===> 无法实现
+```
+
+- render props
+
+```
+<A render={data => <C data={data} />} />
+A组件：{this.props.render(内部state数据)}
+B组件：读取A组件传入的数据显示{this.props.data}
+```
+
+### 8.错误边界
+
+- 理解： 错误边界(Error boundary):用来捕获后台组件错误，渲染出备用页面
+- 特点： 只能捕获后代组件生命周期产生的错误，不能捕获自己组件产生的错误和其他组件在合成事件、定时器中产生的错误
+- 使用方式：
+  ```
+  getDerivedStateFromError配合compoentDidCatch
+
+  // static getDerivedStateFromError(error){
+    console.log(error)
+    // 在render前触发，返回新的state
+    return {
+      hasError: true
+    }
+  }
+  componentDidCatch(error,info){
+    // 可以统计页面的错误，发送请求到后端
+    console.log(error,info)
+  }
+  ```
+
+  ### 9. 组件间通信方式总结
+
+  - 组件间的关系：
+    + 父子组件
+    + 兄弟组件(非嵌套组件)
+    + 祖孙组件(跨级组件)
+- 几种通信方式
+
+  1. props: (1) children props (2). render props
+  2. 消息订阅-发布： pubs-sub,event等等
+  3. 集中式管理： redux、dva等
+  4. conText：生产者-消费者模式
+- 比较好的搭配方式
+
+  1. 父子组件-> props
+  2. 兄弟组件-> 消息订阅-发布、集中式管理
+  3. 祖孙组件(跨级组件)：消息订阅、集中式管理、conText(开发用的少，封装插件较多)

@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import Demo from './components/3_hooks';
+import React, { Component, Fragment } from 'react'
+import Demo from './components/8_errorBoundary/Parent';
 export default class App extends Component {
   render() {
     return (
-      <div>
+      <Fragment>
         <Demo />
-      </div>
+      </Fragment>
     )
   }
 }
